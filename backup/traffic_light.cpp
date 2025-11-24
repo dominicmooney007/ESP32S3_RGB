@@ -1,27 +1,16 @@
 #include <Arduino.h>
-#include <Adafruit_NeoPixel.h>
 
-// Onboard RGB LED
-#define RGB_LED_PIN 38
-#define NUM_LEDS 1
-
-// Traffic light LED pins
+// Traffic light LED pins - adjust to match your wiring
 #define RED_PIN    15
 #define YELLOW_PIN 16
 #define GREEN_PIN  17
 
-Adafruit_NeoPixel pixel(NUM_LEDS, RGB_LED_PIN, NEO_GRB + NEO_KHZ800);
-
 void setup() {
-  // Initialize RGB LED
-  pixel.begin();
-  pixel.setBrightness(50);
-
-  // Initialize traffic light pins
   pinMode(RED_PIN, OUTPUT);
   pinMode(YELLOW_PIN, OUTPUT);
   pinMode(GREEN_PIN, OUTPUT);
 
+  // Start with all LEDs off
   digitalWrite(RED_PIN, LOW);
   digitalWrite(YELLOW_PIN, LOW);
   digitalWrite(GREEN_PIN, LOW);
@@ -30,22 +19,16 @@ void setup() {
 void loop() {
   // Green - Go
   digitalWrite(GREEN_PIN, HIGH);
-  pixel.setPixelColor(0, pixel.Color(0, 255, 0));
-  pixel.show();
   delay(1000);
   digitalWrite(GREEN_PIN, LOW);
 
   // Yellow - Caution
   digitalWrite(YELLOW_PIN, HIGH);
-  pixel.setPixelColor(0, pixel.Color(255, 255, 0));
-  pixel.show();
   delay(500);
   digitalWrite(YELLOW_PIN, LOW);
 
   // Red - Stop
   digitalWrite(RED_PIN, HIGH);
-  pixel.setPixelColor(0, pixel.Color(255, 0, 0));
-  pixel.show();
   delay(2000);
   digitalWrite(RED_PIN, LOW);
 }
